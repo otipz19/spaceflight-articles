@@ -4,4 +4,34 @@
 
 .content {
   padding: 2rem;
+  width: fit-content;
+  margin: 0 auto 0 auto;
+}
+
+.search-bar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: start;
+  gap: 0.5rem;
+  width: 100%;
+  @media (min-width: 1024px) {
+    width: 50%;
+  }
+
+  .search-label {
+    font-weight: 550;
+  }
+
+  .search-field {
+    width: 100%;
+  }
+}
+
+.results-label {
+  font-weight: 550;
+}
+
+.articles-list {
+  margin-top: 2.5rem;
 }

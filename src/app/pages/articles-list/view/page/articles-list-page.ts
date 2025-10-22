@@ -2,11 +2,20 @@ import {ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, signal} 
 import {Article, ArticlesService} from '../../../../api';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {ArticlesList} from '../components/articles-list/articles-list';
+import {MatFormField, MatPrefix} from '@angular/material/form-field';
+import {MatInput} from '@angular/material/input';
+import {MatIcon} from '@angular/material/icon';
+import {MatDivider} from '@angular/material/divider';
 
 @Component({
   selector: 'app-articles-list-page',
   imports: [
-    ArticlesList
+    ArticlesList,
+    MatFormField,
+    MatInput,
+    MatIcon,
+    MatPrefix,
+    MatDivider,
   ],
   templateUrl: './articles-list-page.html',
   styleUrl: './articles-list-page.scss',

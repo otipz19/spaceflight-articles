@@ -1,3 +1,15 @@
 <div class="content">
-  <app-articles-list [articles]="articles()"/>
+  <div class="search-bar">
+    <label class="search-label">Filter by keywords</label>
+
+    <mat-form-field class="search-field" appearance="outline">
+      <mat-icon matPrefix>search</mat-icon>
+      <input matInput placeholder="SpaceX Mars mission landing..."/>
+    </mat-form-field>
+  </div>
+
+  <p class="results-label">Results: {{ articles().length }}</p>
+  <mat-divider/>
+
+  <app-articles-list class="articles-list" [articles]="articles()"/>
 </div>
