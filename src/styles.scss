@@ -37,3 +37,9 @@ body {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+:root {
+  @include mat.card-overrides((
+    elevated-container-color: rgb(250, 249, 253),
+  ));
+}

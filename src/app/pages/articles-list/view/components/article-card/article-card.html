@@ -1,0 +1,28 @@
+@let a = article();
+
+<mat-card appearance="raised">
+  <img mat-card-image class="article-img" [src]="a.image_url" alt="Article image">
+
+  <mat-card-content>
+    <div>
+      <div class="article-date">
+        <mat-icon fontIcon="calendar_today"/>
+        <span>{{ a.published_at | date : 'mediumDate' }}</span>
+      </div>
+
+      <p class="article-title">{{ a.title }}</p>
+
+      <p>
+        <span>{{ a.summary | slice: 0 : 100 }}</span>
+        @if (a.summary.length > 100) {
+          <span>...</span>
+        }
+      </p>
+    </div>
+
+    <a matButton [routerLink]="[a.id]">
+      Read more
+      <mat-icon iconPositionEnd fontIcon="arrow_forward"/>
+    </a>
+  </mat-card-content>
+</mat-card>
