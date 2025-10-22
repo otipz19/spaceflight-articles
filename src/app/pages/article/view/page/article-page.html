@@ -1,0 +1,11 @@
+<img class="article-img" [src]="article.image_url" alt="Article image"/>
+
+<mat-card class="article-card">
+  <p class="article-title">{{ article.title }}</p>
+  <p class="article-description">{{ article.summary }}</p>
+</mat-card>
+
+<a matButton [routerLink]="['..']">
+  Back to homepage
+  <mat-icon fontIcon="arrow_backward"/>
+</a>
