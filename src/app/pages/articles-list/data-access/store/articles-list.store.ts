@@ -3,8 +3,9 @@ import {signalStore, withComputed, withState} from '@ngrx/signals';
 import {Events, on, withEffects, withReducer} from '@ngrx/signals/events';
 import {articlesApiEvents, articlesListPageEvents} from './articles-list.events';
 import {computed, inject} from '@angular/core';
-import {switchMap} from 'rxjs';
+import {switchMap, tap} from 'rxjs';
 import {mapResponse} from '@ngrx/operators';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 type ArticlesListState = {
   articles: Array<Article>,
@@ -70,7 +71,12 @@ export const ArticlesListStore = signalStore(
     )
   ),
 
-  withEffects((store, events = inject(Events), api = inject(ArticlesService)) => ({
+  withEffects((
+    store,
+    events = inject(Events),
+    api = inject(ArticlesService),
+    snackBar = inject(MatSnackBar
+    )) => ({
     loadArticles$: events
       .on(articlesListPageEvents.opened, articlesListPageEvents.searchQueryChanged)
       .pipe(
@@ -93,6 +99,18 @@ export const ArticlesListStore = signalStore(
             );
         })
       ),
+
+    showErrorNotification$: events
+      .on(articlesApiEvents.requestError)
+      .pipe(
+        tap(() => {
+          snackBar.open('Request failed. Something went wrong...', 'OK', {
+            duration: 1500,
+            verticalPosition: 'top',
+            horizontalPosition: 'right'
+          })
+        })
+      )
   }))
 );
 
