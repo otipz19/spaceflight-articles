@@ -10,10 +10,10 @@
         <span>{{ a.published_at | date : 'mediumDate' }}</span>
       </div>
 
-      <p class="article-title">{{ a.title }}</p>
+      <p class="article-title" [innerHtml]="a.title | highlightSearchMatches : searchRegex()"></p>
 
       <p>
-        <span>{{ a.summary | slice: 0 : 100 }}</span>
+        <span [innerHtml]="a.summary | slice: 0 : 100 | highlightSearchMatches : searchRegex()"></span>
         @if (a.summary.length > 100) {
           <span>...</span>
         }
