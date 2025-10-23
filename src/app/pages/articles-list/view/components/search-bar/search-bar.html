@@ -2,5 +2,6 @@
 
 <mat-form-field class="search-field" appearance="outline">
   <mat-icon matPrefix>search</mat-icon>
-  <input matInput placeholder="SpaceX Mars mission landing..." [(ngModel)]="searchInput"/>
+  <input matInput placeholder="SpaceX Mars mission landing..." [ngModel]="searchQuery()"
+         (ngModelChange)="onSearchQueryChanged($event)"/>
 </mat-form-field>

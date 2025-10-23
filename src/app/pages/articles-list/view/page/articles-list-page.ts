@@ -1,10 +1,12 @@
-import {ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, signal} from '@angular/core';
-import {Article, ArticlesListRequestParams, ArticlesService} from '../../../../api';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {ChangeDetectionStrategy, Component, inject, OnInit, Signal} from '@angular/core';
 import {ArticlesList} from '../components/articles-list/articles-list';
 import {MatDivider} from '@angular/material/divider';
 import {FormsModule} from '@angular/forms';
 import {SearchBar} from '../components/search-bar/search-bar';
+import {ArticlesListStore} from '../../data-access/store/articles-list.store';
+import {injectDispatch} from '@ngrx/signals/events';
+import {articlesListPageEvents} from '../../data-access/store/articles-list.events';
+import {Article} from '../../../../api';
 
 @Component({
   selector: 'app-articles-list-page',
@@ -16,33 +18,16 @@ import {SearchBar} from '../components/search-bar/search-bar';
   ],
   templateUrl: './articles-list-page.html',
   styleUrl: './articles-list-page.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [ArticlesListStore]
 })
 export class ArticlesListPage implements OnInit {
-  private readonly articlesApi = inject(ArticlesService);
-  private readonly destroyRef = inject(DestroyRef);
+  private readonly store = inject(ArticlesListStore);
+  private readonly dispatch = injectDispatch(articlesListPageEvents);
 
-  protected readonly articles = signal<Article[]>([]);
+  protected readonly articles: Signal<Article[]> = this.store.articles;
 
   ngOnInit() {
-    this.loadArticles();
-  }
-
-  protected loadArticles(searchValue?: string) {
-    const params: ArticlesListRequestParams = {};
-
-    if(searchValue) {
-      const keywords = searchValue.toLowerCase().split(" ").join(",");
-      params.titleContainsOne = keywords;
-      params.summaryContainsOne = keywords;
-    }
-
-    this.articlesApi.articlesList(params)
-      .pipe(
-        takeUntilDestroyed(this.destroyRef)
-      )
-      .subscribe(res => {
-        this.articles.set(res.results);
-      });
+    this.dispatch.opened();
   }
 }

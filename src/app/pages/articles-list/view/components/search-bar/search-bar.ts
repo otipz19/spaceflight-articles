@@ -1,10 +1,12 @@
-import {ChangeDetectionStrategy, Component, output, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, Signal} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {MatFormField} from '@angular/material/form-field';
 import {MatIcon} from '@angular/material/icon';
 import {MatInput} from '@angular/material/input';
-import {takeUntilDestroyed, toObservable} from '@angular/core/rxjs-interop';
-import {debounceTime, distinctUntilChanged} from 'rxjs';
+import {debounceTime, distinctUntilChanged, Subject} from 'rxjs';
+import {injectDispatch} from '@ngrx/signals/events';
+import {articlesListPageEvents} from '../../../data-access/store/articles-list.events';
+import {ArticlesListStore} from '../../../data-access/store/articles-list.store';
 
 @Component({
   selector: 'app-search-bar',
@@ -19,16 +21,22 @@ import {debounceTime, distinctUntilChanged} from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SearchBar {
-  readonly search = output<string>();
-  protected readonly searchInput = signal<string>("");
+  private readonly store = inject(ArticlesListStore);
+  private readonly dispatch = injectDispatch(articlesListPageEvents);
+
+  protected readonly searchQuery: Signal<string> = this.store.searchQuery;
+  private readonly searchQueryChange$ = new Subject<string>();
+
+  protected onSearchQueryChanged(value: string) {
+    this.searchQueryChange$.next(value);
+  }
 
   constructor() {
-    toObservable(this.searchInput)
+    this.searchQueryChange$
       .pipe(
-        takeUntilDestroyed(),
         debounceTime(500),
         distinctUntilChanged()
       )
-      .subscribe(v => this.search.emit(v));
+      .subscribe(v => this.dispatch.searchQueryChanged(v));
   }
 }
