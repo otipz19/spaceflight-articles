@@ -4,8 +4,16 @@
 
 .content {
   padding: 2rem;
+  min-width: 24rem;
   width: fit-content;
   margin: 0 auto 0 auto;
+
+  @media (min-width: 768px) {
+    min-width: 50rem;
+  }
+  @media (min-width: 1024px) {
+    min-width: 76rem;
+  }
 }
 
 .search-bar {
