@@ -7,5 +7,8 @@
   "nullSafeAdditionalProps": true,
   "outputDir": "src/app/api",
   "generator-name": "typescript-angular",
-  "useBearerAuthentication": true
+  "useBearerAuthentication": true,
+  "additionalProperties": {
+    "useSingleRequestParameter": true
+  }
 }

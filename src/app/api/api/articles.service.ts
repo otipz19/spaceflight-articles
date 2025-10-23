@@ -27,6 +27,64 @@ import { Configuration }                                     from '../configurat
 import { BaseService } from '../api.base.service';
 
 
+export interface ArticlesListRequestParams {
+    /** Search for all documents related to a specific event using its Launch Library 2 ID. */
+    event?: Array<number>;
+    /** Get all documents that have a related event. */
+    hasEvent?: boolean;
+    /** Get all documents that have a related launch. */
+    hasLaunch?: boolean;
+    /** Get all documents that are featured. */
+    isFeatured?: boolean;
+    /** Search for all documents related to a specific launch using its Launch Library 2 ID. */
+    launch?: Array<string>;
+    /** Number of results to return per page. */
+    limit?: number;
+    /** Search for documents with a news_site__name present in a list of comma-separated values. Case insensitive. */
+    newsSite?: string;
+    /** Search for documents with a news_site__name not present in a list of comma-separated values. Case insensitive. */
+    newsSiteExclude?: string;
+    /** The initial index from which to return the results. */
+    offset?: number;
+    /** Order the result on &#x60;published_at, -published_at, updated_at, -updated_at&#x60;.  * &#x60;published_at&#x60; - Published at * &#x60;-published_at&#x60; - Published at (descending) * &#x60;updated_at&#x60; - Updated at * &#x60;-updated_at&#x60; - Updated at (descending) */
+    ordering?: Array<'-published_at' | '-updated_at' | 'published_at' | 'updated_at'>;
+    /** Get all documents published after a given ISO8601 timestamp (excluded). */
+    publishedAtGt?: string;
+    /** Get all documents published after a given ISO8601 timestamp (included). */
+    publishedAtGte?: string;
+    /** Get all documents published before a given ISO8601 timestamp (excluded). */
+    publishedAtLt?: string;
+    /** Get all documents published before a given ISO8601 timestamp (included). */
+    publishedAtLte?: string;
+    /** Search for documents with a specific phrase in the title or summary. */
+    search?: string;
+    /** Search for all documents with a specific phrase in the summary. */
+    summaryContains?: string;
+    /** Search for documents with a summary containing all keywords from comma-separated values. */
+    summaryContainsAll?: string;
+    /** Search for documents with a summary containing at least one keyword from comma-separated values. */
+    summaryContainsOne?: string;
+    /** Search for all documents with a specific phrase in the title. */
+    titleContains?: string;
+    /** Search for documents with a title containing all keywords from comma-separated values. */
+    titleContainsAll?: string;
+    /** Search for documents with a title containing at least one keyword from comma-separated values. */
+    titleContainsOne?: string;
+    /** Get all documents updated after a given ISO8601 timestamp (excluded). */
+    updatedAtGt?: string;
+    /** Get all documents updated after a given ISO8601 timestamp (included). */
+    updatedAtGte?: string;
+    /** Get all documents updated before a given ISO8601 timestamp (excluded). */
+    updatedAtLt?: string;
+    /** Get all documents updated before a given ISO8601 timestamp (included). */
+    updatedAtLte?: string;
+}
+
+export interface ArticlesRetrieveRequestParams {
+    /** A unique integer value identifying this article. */
+    id: number;
+}
+
 
 @Injectable({
   providedIn: 'root'
@@ -38,38 +96,39 @@ export class ArticlesService extends BaseService {
     }
 
     /**
-     * @param event Search for all documents related to a specific event using its Launch Library 2 ID.
-     * @param hasEvent Get all documents that have a related event.
-     * @param hasLaunch Get all documents that have a related launch.
-     * @param isFeatured Get all documents that are featured.
-     * @param launch Search for all documents related to a specific launch using its Launch Library 2 ID.
-     * @param limit Number of results to return per page.
-     * @param newsSite Search for documents with a news_site__name present in a list of comma-separated values. Case insensitive.
-     * @param newsSiteExclude Search for documents with a news_site__name not present in a list of comma-separated values. Case insensitive.
-     * @param offset The initial index from which to return the results.
-     * @param ordering Order the result on &#x60;published_at, -published_at, updated_at, -updated_at&#x60;.  * &#x60;published_at&#x60; - Published at * &#x60;-published_at&#x60; - Published at (descending) * &#x60;updated_at&#x60; - Updated at * &#x60;-updated_at&#x60; - Updated at (descending)
-     * @param publishedAtGt Get all documents published after a given ISO8601 timestamp (excluded).
-     * @param publishedAtGte Get all documents published after a given ISO8601 timestamp (included).
-     * @param publishedAtLt Get all documents published before a given ISO8601 timestamp (excluded).
-     * @param publishedAtLte Get all documents published before a given ISO8601 timestamp (included).
-     * @param search Search for documents with a specific phrase in the title or summary.
-     * @param summaryContains Search for all documents with a specific phrase in the summary.
-     * @param summaryContainsAll Search for documents with a summary containing all keywords from comma-separated values.
-     * @param summaryContainsOne Search for documents with a summary containing at least one keyword from comma-separated values.
-     * @param titleContains Search for all documents with a specific phrase in the title.
-     * @param titleContainsAll Search for documents with a title containing all keywords from comma-separated values.
-     * @param titleContainsOne Search for documents with a title containing at least one keyword from comma-separated values.
-     * @param updatedAtGt Get all documents updated after a given ISO8601 timestamp (excluded).
-     * @param updatedAtGte Get all documents updated after a given ISO8601 timestamp (included).
-     * @param updatedAtLt Get all documents updated before a given ISO8601 timestamp (excluded).
-     * @param updatedAtLte Get all documents updated before a given ISO8601 timestamp (included).
+     * @param requestParameters
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public articlesList(event?: Array<number>, hasEvent?: boolean, hasLaunch?: boolean, isFeatured?: boolean, launch?: Array<string>, limit?: number, newsSite?: string, newsSiteExclude?: string, offset?: number, ordering?: Array<'-published_at' | '-updated_at' | 'published_at' | 'updated_at'>, publishedAtGt?: string, publishedAtGte?: string, publishedAtLt?: string, publishedAtLte?: string, search?: string, summaryContains?: string, summaryContainsAll?: string, summaryContainsOne?: string, titleContains?: string, titleContainsAll?: string, titleContainsOne?: string, updatedAtGt?: string, updatedAtGte?: string, updatedAtLt?: string, updatedAtLte?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<PaginatedArticleList>;
-    public articlesList(event?: Array<number>, hasEvent?: boolean, hasLaunch?: boolean, isFeatured?: boolean, launch?: Array<string>, limit?: number, newsSite?: string, newsSiteExclude?: string, offset?: number, ordering?: Array<'-published_at' | '-updated_at' | 'published_at' | 'updated_at'>, publishedAtGt?: string, publishedAtGte?: string, publishedAtLt?: string, publishedAtLte?: string, search?: string, summaryContains?: string, summaryContainsAll?: string, summaryContainsOne?: string, titleContains?: string, titleContainsAll?: string, titleContainsOne?: string, updatedAtGt?: string, updatedAtGte?: string, updatedAtLt?: string, updatedAtLte?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<PaginatedArticleList>>;
-    public articlesList(event?: Array<number>, hasEvent?: boolean, hasLaunch?: boolean, isFeatured?: boolean, launch?: Array<string>, limit?: number, newsSite?: string, newsSiteExclude?: string, offset?: number, ordering?: Array<'-published_at' | '-updated_at' | 'published_at' | 'updated_at'>, publishedAtGt?: string, publishedAtGte?: string, publishedAtLt?: string, publishedAtLte?: string, search?: string, summaryContains?: string, summaryContainsAll?: string, summaryContainsOne?: string, titleContains?: string, titleContainsAll?: string, titleContainsOne?: string, updatedAtGt?: string, updatedAtGte?: string, updatedAtLt?: string, updatedAtLte?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<PaginatedArticleList>>;
-    public articlesList(event?: Array<number>, hasEvent?: boolean, hasLaunch?: boolean, isFeatured?: boolean, launch?: Array<string>, limit?: number, newsSite?: string, newsSiteExclude?: string, offset?: number, ordering?: Array<'-published_at' | '-updated_at' | 'published_at' | 'updated_at'>, publishedAtGt?: string, publishedAtGte?: string, publishedAtLt?: string, publishedAtLte?: string, search?: string, summaryContains?: string, summaryContainsAll?: string, summaryContainsOne?: string, titleContains?: string, titleContainsAll?: string, titleContainsOne?: string, updatedAtGt?: string, updatedAtGte?: string, updatedAtLt?: string, updatedAtLte?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public articlesList(requestParameters?: ArticlesListRequestParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<PaginatedArticleList>;
+    public articlesList(requestParameters?: ArticlesListRequestParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<PaginatedArticleList>>;
+    public articlesList(requestParameters?: ArticlesListRequestParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<PaginatedArticleList>>;
+    public articlesList(requestParameters?: ArticlesListRequestParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        const event = requestParameters?.event;
+        const hasEvent = requestParameters?.hasEvent;
+        const hasLaunch = requestParameters?.hasLaunch;
+        const isFeatured = requestParameters?.isFeatured;
+        const launch = requestParameters?.launch;
+        const limit = requestParameters?.limit;
+        const newsSite = requestParameters?.newsSite;
+        const newsSiteExclude = requestParameters?.newsSiteExclude;
+        const offset = requestParameters?.offset;
+        const ordering = requestParameters?.ordering;
+        const publishedAtGt = requestParameters?.publishedAtGt;
+        const publishedAtGte = requestParameters?.publishedAtGte;
+        const publishedAtLt = requestParameters?.publishedAtLt;
+        const publishedAtLte = requestParameters?.publishedAtLte;
+        const search = requestParameters?.search;
+        const summaryContains = requestParameters?.summaryContains;
+        const summaryContainsAll = requestParameters?.summaryContainsAll;
+        const summaryContainsOne = requestParameters?.summaryContainsOne;
+        const titleContains = requestParameters?.titleContains;
+        const titleContainsAll = requestParameters?.titleContainsAll;
+        const titleContainsOne = requestParameters?.titleContainsOne;
+        const updatedAtGt = requestParameters?.updatedAtGt;
+        const updatedAtGte = requestParameters?.updatedAtGte;
+        const updatedAtLt = requestParameters?.updatedAtLt;
+        const updatedAtLte = requestParameters?.updatedAtLte;
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         if (event) {
@@ -171,14 +230,15 @@ export class ArticlesService extends BaseService {
     }
 
     /**
-     * @param id A unique integer value identifying this article.
+     * @param requestParameters
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public articlesRetrieve(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Article>;
-    public articlesRetrieve(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Article>>;
-    public articlesRetrieve(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Article>>;
-    public articlesRetrieve(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public articlesRetrieve(requestParameters: ArticlesRetrieveRequestParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Article>;
+    public articlesRetrieve(requestParameters: ArticlesRetrieveRequestParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Article>>;
+    public articlesRetrieve(requestParameters: ArticlesRetrieveRequestParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Article>>;
+    public articlesRetrieve(requestParameters: ArticlesRetrieveRequestParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        const id = requestParameters?.id;
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling articlesRetrieve.');
         }

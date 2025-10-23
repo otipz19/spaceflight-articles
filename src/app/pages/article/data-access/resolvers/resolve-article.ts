@@ -16,7 +16,7 @@ export const resolveArticle: ResolveFn<Article> = (route) => {
 
   const api = inject(ArticlesService);
 
-  return api.articlesRetrieve(id)
+  return api.articlesRetrieve({id})
     .pipe(
       catchError(() => {
         router.navigate(['not-found']);
