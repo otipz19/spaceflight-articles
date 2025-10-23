@@ -10,5 +10,14 @@
     </div>
   } @else {
     <app-articles-list class="articles-list" [articles]="articles()"/>
+
+    @if (articles().length > 0) {
+      <mat-paginator (page)="onPagination($event)"
+                     [length]="total()"
+                     [pageSize]="pageSize()"
+                     [pageIndex]="pageIndex()"
+                     [pageSizeOptions]="PAGE_SIZE_OPTIONS">
+      </mat-paginator>
+    }
   }
 </div>
