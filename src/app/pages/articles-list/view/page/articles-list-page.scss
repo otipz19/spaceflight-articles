@@ -9,22 +9,9 @@
 }
 
 .search-bar {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: start;
-  gap: 0.5rem;
   width: 100%;
   @media (min-width: 1024px) {
     width: 50%;
-  }
-
-  .search-label {
-    font-weight: 550;
-  }
-
-  .search-field {
-    width: 100%;
   }
 }
 

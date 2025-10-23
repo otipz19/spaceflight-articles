@@ -1,0 +1,15 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: start;
+  gap: 0.5rem;
+}
+
+.search-label {
+  font-weight: 550;
+}
+
+.search-field {
+  width: 100%;
+}
