@@ -4,5 +4,11 @@
   <p class="results-label">Results: {{ articles().length }}</p>
   <mat-divider/>
 
-  <app-articles-list class="articles-list" [articles]="articles()"/>
+  @if (isLoading()) {
+    <div class="spinner-container">
+      <mat-spinner class="spinner"/>
+    </div>
+  } @else {
+    <app-articles-list class="articles-list" [articles]="articles()"/>
+  }
 </div>
